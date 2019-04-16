@@ -50,11 +50,30 @@ namespace ImageAbridged.Controllers
 			//return File(image, "image/png");
 		}
 
-		private static void ExecuteProcess(string filename, string arguments)
+		private void ExecuteNodeProcess()
 		{
 			using (var process = new Process
 			{
-				StartInfo = { FileName = filename, Arguments = arguments, CreateNoWindow = false, ErrorDialog = false, UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true, WindowStyle = ProcessWindowStyle.Hidden },
+				StartInfo = { CreateNoWindow = true, RedirectStandardInput = true,
+							  RedirectStandardOutput = true, UseShellExecute = false,
+							  RedirectStandardError = true, FileName = "node.exe",
+							  Arguments = "-i"}
+			})
+			{
+				process.Start();
+				process.WaitForExit();
+			}
+		}
+
+		private void ExecuteProcess(string filename, string arguments)
+		{
+			using (var process = new Process
+			{
+				StartInfo = { FileName = filename, Arguments = arguments,
+							  CreateNoWindow = false, ErrorDialog = false,
+							  UseShellExecute = false, RedirectStandardOutput = true,
+							  RedirectStandardError = true,
+							  WindowStyle = ProcessWindowStyle.Hidden },
 				EnableRaisingEvents = true
 			})
 			{
