@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { MemoryRouter, Switch, Route } from 'react-router';
+import * as RoutesModule from './routes';
 
-// Import the styles here to process them with webpack
-import './layout.scss';
+let routes = RoutesModule.routes;
 
-ReactDOM.render(
-    <div>
-        <h4>Welcome to React, Electron and Typescript</h4>
-    </div>,
-    document.getElementById('app')
-);
+function renderApp() {
+    ReactDOM.render(
+        <MemoryRouter children={routes}></MemoryRouter>,
+        document.getElementById('react-app')
+    );
+}
+
+renderApp();
