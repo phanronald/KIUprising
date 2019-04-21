@@ -1,6 +1,11 @@
-﻿.compressed-image {
+﻿.compressed-image-container {
 
-    img {
-        max-width: 98vw;
+    margin-bottom: 24px;
+
+    .compressed-image {
+
+        img {
+            max-width: 98vw;
+        }
     }
 }

@@ -6,12 +6,18 @@ import * as React from "react";
 
 import { IBaseSixtyFourImageProps, IBaseSixtyFourImageState } from './../../../../model/basesixtyfourimage/ibasesixtyfourimage';
 
+import { SaveImage } from './../save-image-prompt/save-image.component';
+
 import './base-sixty-four-image.component.scss';
 
 export class BaseSixtyFourImage extends React.Component<IBaseSixtyFourImageProps, IBaseSixtyFourImageState> {
 
+	private base64Href: string = '';
+
 	constructor(props: IBaseSixtyFourImageProps) {
 		super(props);
+
+		this.base64Href = 'data:' + this.props.imageMimeType + ';base64,' + this.props.base64Image;
 	}
 
 	public componentDidMount() {
@@ -24,11 +30,16 @@ export class BaseSixtyFourImage extends React.Component<IBaseSixtyFourImageProps
 
 	render() {
 
-		const { base64Image, imageMimeType } = this.props;
+		const { imageMimeType } = this.props;
 
 		return (
-			<div className="compressed-image">
-				<img src={'data:' + imageMimeType + ';base64,' + base64Image} />
+			<div className='compressed-image-container'>
+				<div className="compressed-image">
+					<img src={this.base64Href} />
+				</div>
+				<div>
+					<SaveImage base64Href={this.base64Href} imageMimeType={imageMimeType} />
+				</div>
 			</div>
 		);
 

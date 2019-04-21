@@ -1,0 +1,15 @@
+:root {
+    --gray: #888;
+    --white: #fff;
+    --black: #000;
+    --ninja-green:#66cc33;
+
+    --oswald-font-family: 'Oswald',sans-serif;
+    --arial-font-family: 'Arial';
+
+    --dp-factor: 8px;
+    --dp-factor-vw: 8vw;
+    --dp-factor-vh: 8vh;
+    --dp-factor-em: 0.5em;
+    --dp-factor-rem: 0.5rem;
+  }

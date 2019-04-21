@@ -1,4 +1,9 @@
-﻿.main-container {
-	color: white;
-	background-color: black;
+﻿
+.dark-theme {
+	color: var(--white);
+	background-color: var(--black);
+}
+
+.main-container {
+	color: var(--black);
 }
