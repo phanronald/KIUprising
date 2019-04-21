@@ -24,8 +24,10 @@ namespace ImageAbridged.Controllers
 
 		[HttpPost]
 		[Route("CompressPng")]
-		public void CompressPng(IFormFile[] pngImgFiles)
+		public IActionResult CompressPng(IFormFile[] pngImgFiles)
 		{
+			//var processedImages = new List<FileStreamResult>();
+			var processedImages = new List<string>();
 			var startInfo = new ProcessStartInfo();
 			foreach (var pngImgFile in pngImgFiles)
 			{
@@ -44,10 +46,17 @@ namespace ImageAbridged.Controllers
 				{
 					System.Diagnostics.Debug.WriteLine(ex.ToString());
 				}
+
+				var processedPngFile = System.IO.File.ReadAllBytes(savedImagePath);
+				processedImages.Add(Convert.ToBase64String(processedPngFile));
+				//using (var pngImageStream = System.IO.File.OpenRead(savedImagePath))
+				//{
+				//	var processedPngFile = File(pngImageStream, "image/png");
+				//	processedImages.Add(processedPngFile);
+				//}
 			}
 
-			//var image = System.IO.File.OpenRead(savedImagePath);
-			//return File(image, "image/png");
+			return Ok(processedImages);
 		}
 
 		private void ExecuteNodeProcess()
