@@ -5,6 +5,8 @@ import * as RoutesModule from './routes';
 
 let routes = RoutesModule.routes;
 
+import './global-variables.css';
+
 function renderApp() {
     ReactDOM.render(
         <MemoryRouter children={routes}></MemoryRouter>,
