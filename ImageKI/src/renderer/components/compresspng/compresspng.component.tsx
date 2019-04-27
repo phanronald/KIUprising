@@ -7,7 +7,7 @@ import { BaseSixtyFourImage } from './../global-components/base-sixty-four-image
 import './compresspng.component.scss';
 
 export class CompressPngComponent extends React.Component<ICompressPngProps, ICompressPngState> {
-	constructor(props: any) {
+	constructor(props: ICompressPngProps) {
 		super(props);
 		this.state = {
 			base64Images: []

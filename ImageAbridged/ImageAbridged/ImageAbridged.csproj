@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="imgprocess\" />
+    <Folder Include="processedjpgs\" />
     <Folder Include="processedpngs\" />
   </ItemGroup>
 

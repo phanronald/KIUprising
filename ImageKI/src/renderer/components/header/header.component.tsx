@@ -14,6 +14,7 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import { IHeaderProps, IHeaderState } from './../../../model/header/iheader';
 
 import { CompressPngComponent } from './../compresspng/compresspng.component';
+import { CompressJpgComponent } from './../compressjpg/compressjpg.component';
 
 import './header.component.scss';
 
@@ -56,7 +57,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 							textColor="primary">
 
 							<Tab label="Compress PNG" icon={<PhoneIcon />} />
-							<Tab label="Item Two" icon={<FavoriteIcon />} />
+							<Tab label="Compress JPG" icon={<FavoriteIcon />} />
 							<Tab label="Item Three" icon={<PersonPinIcon />} />
 							<Tab label="Item Four" icon={<HelpIcon />} />
 							<Tab label="Item Five" icon={<ShoppingBasket />} />
@@ -70,7 +71,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 					}
 					{
 						tabIndex === 1 &&
-						<div>Item Two</div>
+						<CompressJpgComponent />
 					}
 					{
 						tabIndex === 2 &&
