@@ -12,16 +12,29 @@ import './base-sixty-four-image.component.scss';
 
 export class BaseSixtyFourImage extends React.Component<IBaseSixtyFourImageProps, IBaseSixtyFourImageState> {
 
-	private base64Href: string = '';
-
 	constructor(props: IBaseSixtyFourImageProps) {
 		super(props);
 
-		this.base64Href = 'data:' + this.props.imageMimeType + ';base64,' + this.props.base64Image;
+		this.state = {
+			base64Href: '',
+			imageMimeType: ''
+		};
 	}
 
 	public componentDidMount() {
+		this.setState({
+			base64Href: 'data:' + this.props.imageMimeType + ';base64,' + this.props.base64Image,
+			imageMimeType: this.props.imageMimeType
+		});
+	}
 
+	public componentDidUpdate(prevProps: IBaseSixtyFourImageProps, prevState: IBaseSixtyFourImageState) {
+		if (this.props.base64Image !== prevProps.base64Image) {
+			this.setState({
+				base64Href: 'data:' + this.props.imageMimeType + ';base64,' + this.props.base64Image,
+				imageMimeType: this.props.imageMimeType
+			});
+		}
 	}
 
 	public componentWillUnmount() {
@@ -30,15 +43,15 @@ export class BaseSixtyFourImage extends React.Component<IBaseSixtyFourImageProps
 
 	render() {
 
-		const { imageMimeType } = this.props;
+		const { base64Href, imageMimeType } = this.state;
 
 		return (
 			<div className='compressed-image-container'>
 				<div className="compressed-image">
-					<img src={this.base64Href} />
+					<img src={base64Href} />
 				</div>
 				<div>
-					<SaveImage base64Href={this.base64Href} imageMimeType={imageMimeType} />
+					<SaveImage base64Href={base64Href} imageMimeType={imageMimeType} />
 				</div>
 			</div>
 		);

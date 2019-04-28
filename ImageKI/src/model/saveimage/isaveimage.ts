@@ -5,4 +5,6 @@ export interface ISaveImageProps {
 }
 
 export interface ISaveImageState {
+    base64Href: string;
+    imageMimeType: string;
 }

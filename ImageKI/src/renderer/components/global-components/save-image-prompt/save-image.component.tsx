@@ -10,10 +10,27 @@ export class SaveImage extends React.Component<ISaveImageProps, ISaveImageState>
 
 	constructor(props: ISaveImageProps) {
 		super(props);
+
+		this.state = {
+			base64Href: '',
+			imageMimeType: ''
+		};
 	}
 
 	public componentDidMount() {
+		this.setState({
+			base64Href: this.props.base64Href,
+			imageMimeType: this.props.imageMimeType
+		});
+	}
 
+	public componentDidUpdate(prevProps: ISaveImageProps, prevState: ISaveImageState) {
+		if (this.props.base64Href !== prevProps.base64Href) {
+			this.setState({
+				base64Href: this.props.base64Href,
+				imageMimeType: this.props.imageMimeType
+			});
+		}
 	}
 
 	public componentWillUnmount() {
@@ -22,10 +39,10 @@ export class SaveImage extends React.Component<ISaveImageProps, ISaveImageState>
 
 	private promptSaveImage = (): void => {
 		let anchorTag = document.createElement('a');
-		anchorTag.href = this.props.base64Href;
+		anchorTag.href = this.state.base64Href;
 
 		let foundImage: boolean = false;
-		switch (this.props.imageMimeType) {
+		switch (this.state.imageMimeType) {
 			case 'image/png': {
 				foundImage = true;
 				anchorTag.download = 'image.png';
@@ -45,8 +62,6 @@ export class SaveImage extends React.Component<ISaveImageProps, ISaveImageState>
 	}
 
 	render() {
-
-		const { base64Href } = this.props;
 
 		return (
 			<>
