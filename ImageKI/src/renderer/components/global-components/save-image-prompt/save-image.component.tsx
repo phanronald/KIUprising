@@ -24,14 +24,24 @@ export class SaveImage extends React.Component<ISaveImageProps, ISaveImageState>
 		let anchorTag = document.createElement('a');
 		anchorTag.href = this.props.base64Href;
 
+		let foundImage: boolean = false;
 		switch (this.props.imageMimeType) {
 			case 'image/png': {
+				foundImage = true;
 				anchorTag.download = 'image.png';
+				break;
+			}
+			case 'image/jpg':
+			case 'image/jpeg': {
+				foundImage = true;
+				anchorTag.download = 'image.jpg';
 				break;
 			}
 		}
 
-		anchorTag.click();
+		if (foundImage) {
+			anchorTag.click();
+		}
 	}
 
 	render() {

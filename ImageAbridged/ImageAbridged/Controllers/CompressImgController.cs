@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ImageAbridged.Models;
+using ImageAbridged.Services.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +15,13 @@ namespace ImageAbridged.Controllers
 	public class CompressImgController : ControllerBase
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly IProcessInfo _processInfo;
 
-		public CompressImgController(IHostingEnvironment hostingEnvironment)
+		public CompressImgController(IHostingEnvironment hostingEnvironment,
+									IProcessInfo processInfo)
 		{
 			_hostingEnvironment = hostingEnvironment;
+			_processInfo = processInfo;
 		}
 
 		[HttpPost]
@@ -39,7 +40,7 @@ namespace ImageAbridged.Controllers
 				try
 				{
 					var exePath = _hostingEnvironment.ContentRootPath + "\\imgprocess\\png\\" + "pngquant.exe";
-					ExecuteWindowRedirectProcess(exePath, string.Format("-f -v --ext .png --quality 60-80 \"{0}\"", savedImagePath));
+					this._processInfo.ExecuteWindowRedirectProcess(exePath, string.Format("-f -v --ext .png --quality 60-80 \"{0}\"", savedImagePath));
 				}
 				catch (Exception ex)
 				{
@@ -84,66 +85,18 @@ namespace ImageAbridged.Controllers
 				try
 				{
 					var exePath = _hostingEnvironment.ContentRootPath + "\\imgprocess\\jpg\\" + "cjpeg.exe";
-					ExecuteNoWindowRedirectProcess(exePath, string.Format("-quality 80 -outfile \"" + savedCompressedImagePath.ToString() + "\" " + "\"" + savedImage + "\""));
+					this._processInfo.ExecuteNoWindowRedirectProcess(exePath, string.Format("-quality 80 -outfile \"" + savedCompressedImagePath.ToString() + "\" " + "\"" + savedImage + "\""));
 				}
 				catch (Exception ex)
 				{
 					System.Diagnostics.Debug.WriteLine(ex.ToString());
 				}
 
-				var processedPngFile = System.IO.File.ReadAllBytes(savedImagePath);
+				var processedPngFile = System.IO.File.ReadAllBytes(savedCompressedImagePath.ToString());
 				processedImages.Add(Convert.ToBase64String(processedPngFile));
 			}
 
 			return Ok(processedImages);
-		}
-
-		private void ExecuteNodeProcess()
-		{
-			using (var process = new Process
-			{
-				StartInfo = { CreateNoWindow = true, RedirectStandardInput = true,
-							  RedirectStandardOutput = true, UseShellExecute = false,
-							  RedirectStandardError = true, FileName = "node.exe",
-							  Arguments = "-i"}
-			})
-			{
-				process.Start();
-				process.WaitForExit();
-			}
-		}
-
-		private void ExecuteWindowRedirectProcess(string filename, string arguments)
-		{
-			using (var process = new Process
-			{
-				StartInfo = { FileName = filename, Arguments = arguments,
-							  CreateNoWindow = false, ErrorDialog = false,
-							  UseShellExecute = false, RedirectStandardOutput = true,
-							  RedirectStandardError = true,
-							  WindowStyle = ProcessWindowStyle.Hidden },
-				EnableRaisingEvents = true
-			})
-			{
-				process.Start();
-				process.WaitForExit();
-			}
-		}
-
-		private void ExecuteNoWindowRedirectProcess(string filename, string arguments)
-		{
-			using (var process = new Process
-			{
-				StartInfo = { FileName = filename, Arguments = arguments,
-							  CreateNoWindow = true, ErrorDialog = false,
-							  UseShellExecute = false, RedirectStandardOutput = false,
-							  RedirectStandardError = false },
-				EnableRaisingEvents = true
-			})
-			{
-				process.Start();
-				process.WaitForExit();
-			}
 		}
 	}
 }

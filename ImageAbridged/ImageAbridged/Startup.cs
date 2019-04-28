@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ImageAbridged.Operations;
+using ImageAbridged.Services;
+using ImageAbridged.Services.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,8 @@ namespace ImageAbridged
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			ConfigureCustomConfigurationOptions(services);
+
 			services.AddCors((options) =>
 			{
 				options.AddPolicy("AnyOrigin", (builder) =>
@@ -76,6 +80,11 @@ namespace ImageAbridged
 			});
 
 			app.UseMvc();
+		}
+
+		private void ConfigureCustomConfigurationOptions(IServiceCollection services)
+		{
+			services.AddSingleton<IProcessInfo, ProcessInfo>();
 		}
 	}
 }
