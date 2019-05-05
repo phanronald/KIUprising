@@ -15,6 +15,7 @@ import { IHeaderProps, IHeaderState } from './../../../model/header/iheader';
 
 import { CompressPngComponent } from './../compresspng/compresspng.component';
 import { CompressJpgComponent } from './../compressjpg/compressjpg.component';
+import { UnarchiveComponent } from './../unarchive/unarchive.component';
 
 import './header.component.scss';
 
@@ -58,7 +59,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 
 							<Tab label="Compress PNG" icon={<PhoneIcon />} />
 							<Tab label="Compress JPG" icon={<FavoriteIcon />} />
-							<Tab label="Item Three" icon={<PersonPinIcon />} />
+							<Tab label="UnArchive" icon={<PersonPinIcon />} />
 							<Tab label="Item Four" icon={<HelpIcon />} />
 							<Tab label="Item Five" icon={<ShoppingBasket />} />
 							<Tab label="Item Six" icon={<ThumbDown />} />
@@ -75,7 +76,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 					}
 					{
 						tabIndex === 2 &&
-						<div>Item Three</div>
+						<UnarchiveComponent />
 					}
 					{
 						tabIndex === 3 &&
