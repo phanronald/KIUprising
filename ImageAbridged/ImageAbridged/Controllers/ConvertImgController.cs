@@ -33,6 +33,7 @@ namespace ImageAbridged.Controllers
 				using (var stream = jpgImgFile.OpenReadStream())
 				{
 					var bitmapJpeg = (Bitmap)Bitmap.FromStream(stream);
+					bitmapJpeg.MakeTransparent();
 					using (MemoryStream ms = new MemoryStream())
 					{
 						bitmapJpeg.Save(ms, ImageFormat.Png);
