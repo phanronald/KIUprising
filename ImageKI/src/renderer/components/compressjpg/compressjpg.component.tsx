@@ -1,13 +1,14 @@
-﻿import * as React from "react";
+﻿
+import * as React from "react";
 
-import { ICompressPngProps, ICompressPngState } from './../../../model/compresspng/icompresspng';
+import { ICompressJpgProps, ICompressJpgState } from '../../../model/compressjpg/icompressjpg';
 
-import { BaseSixtyFourImage } from './../global-components/base-sixty-four-image/base-sixty-four-image.component';
+import { BaseSixtyFourImage } from '../global-components/base-sixty-four-image/base-sixty-four-image.component';
 
-import './compresspng.component.scss';
+import './compressjpg.component.scss';
 
-export class CompressPngComponent extends React.Component<ICompressPngProps, ICompressPngState> {
-	constructor(props: ICompressPngProps) {
+export class CompressJpgComponent extends React.Component<ICompressJpgProps, ICompressJpgState> {
+	constructor(props: ICompressJpgProps) {
 		super(props);
 		this.state = {
 			base64Images: []
@@ -21,7 +22,7 @@ export class CompressPngComponent extends React.Component<ICompressPngProps, ICo
 	public componentWillUnmount() {
 	}
 
-	private async sendImagePngToCompress() {
+	private async sendImageJpgToCompress() {
 		let imageFiles = document.getElementById("imgFile") as HTMLInputElement;
 		let formData = new FormData();
 
@@ -29,13 +30,13 @@ export class CompressPngComponent extends React.Component<ICompressPngProps, ICo
 
 			for (let i = 0; i < imageFiles.files.length; i++) {
 				const imageFile = imageFiles.files[i];
-				if (imageFile.type === 'image/png') {
-					formData.append('pngImgFiles', imageFile);
+				if (imageFile.type === 'image/jpg' || imageFile.type === 'image/jpeg') {
+					formData.append('jpgImgFiles', imageFile);
 				}
 			}
 		}
 
-		let response = await fetch('https://localhost:44375/api/CompressImg/CompressPng', {
+		let response = await fetch('https://localhost:44375/api/CompressImg/CompressJpeg', {
 			method: "POST", // *GET, POST, PUT, DELETE, etc.
 			mode: "cors", // no-cors, cors, *same-origin
 			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -61,11 +62,11 @@ export class CompressPngComponent extends React.Component<ICompressPngProps, ICo
 			<>
 				<div>
 					<div>
-						<span>Compressing PNG</span>
+						<span>Compressing JPG</span>
 					</div>
 					<div>
-						<input id="imgFile" type="file" name="files" multiple accept="image/png"
-							onChange={evt => this.sendImagePngToCompress()} />
+						<input id="imgFile" type="file" name="files" multiple accept="image/jpeg"
+							onChange={evt => this.sendImageJpgToCompress()} />
 					</div>
 				</div>
 				<div>
@@ -74,7 +75,7 @@ export class CompressPngComponent extends React.Component<ICompressPngProps, ICo
 
 							return (
 								<BaseSixtyFourImage key={index} base64Image={base64Image}
-									imageMimeType={'image/png'} />
+									imageMimeType={'image/jpg'} />
 							)
 
 						})

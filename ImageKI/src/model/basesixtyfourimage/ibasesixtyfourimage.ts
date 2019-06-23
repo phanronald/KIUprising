@@ -5,4 +5,6 @@ export interface IBaseSixtyFourImageProps {
 }
 
 export interface IBaseSixtyFourImageState {
+    base64Href: string;
+    imageMimeType: string;
 }
