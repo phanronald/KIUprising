@@ -5,7 +5,7 @@ import * as url from 'url';
 let mainWindow: Electron.BrowserWindow;
 const menuTemplate: Electron.MenuItemConstructorOptions[] = [
     { label: app.getName(), submenu: [{ role: 'quit' }] },
-    { label: 'View', submenu: [{ label: 'Refresh', role: 'forceReload' }] }
+    { label: 'View', submenu: [{ label: 'Refresh', role: 'forcereload' }] }
 ];
 
 function createWindow() {
