@@ -27,7 +27,7 @@ export class Layout extends React.Component<LayoutProps, any> {
 		return (
 			<div className='main-container clearfix'>
 				<HeaderComponent />
-				<div className='content-container'>
+				<div className='app-theme content-container'>
 					{this.props.children}
 				</div>
 			</div>

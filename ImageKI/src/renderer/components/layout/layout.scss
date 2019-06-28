@@ -1,9 +1,18 @@
 ﻿
-.dark-theme {
-	color: var(--white);
-	background-color: var(--black);
-}
-
 .main-container {
 	color: var(--black);
+}
+
+@media (prefers-color-scheme: dark) {
+	.app-theme {
+		color: var(--white);
+		background-color: var(--black);
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	.app-theme {
+		color: var(--black);
+		background-color: var(--white);
+	}
 }

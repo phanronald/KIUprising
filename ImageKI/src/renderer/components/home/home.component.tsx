@@ -14,12 +14,17 @@ export class HomeComponent extends React.Component<any, any> {
 	public componentWillUnmount() {
 	}
 
+	private displayChromeVersion = ():string => {
+		return navigator.appVersion.match(/.*Chrome\/([0-9\.]+)/)[1];
+	}
+
 	render() {
 
 		return (
 			<>
 				<div>
 					<h4>Welcome to React, Electron and Typescript with Router Upgraded v2</h4>
+					<h3>{this.displayChromeVersion()}</h3>
 				</div>
 			</>
 		);
