@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 
-import { IUnarchiveProps, IUnarchiveState } from './../../../model/unarchive/iunarchive';
+import { IUnarchiveProps, IUnarchiveState } from './../../../model/client/unarchive/iunarchive';
 
 import './unarchive.component.scss';
 

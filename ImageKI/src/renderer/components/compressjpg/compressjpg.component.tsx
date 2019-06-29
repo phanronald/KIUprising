@@ -1,7 +1,7 @@
 ﻿
 import * as React from "react";
 
-import { ICompressJpgProps, ICompressJpgState } from '../../../model/compressjpg/icompressjpg';
+import { ICompressJpgProps, ICompressJpgState } from '../../../model/client/compressjpg/icompressjpg';
 
 import { BaseSixtyFourImage } from '../global-components/base-sixty-four-image/base-sixty-four-image.component';
 

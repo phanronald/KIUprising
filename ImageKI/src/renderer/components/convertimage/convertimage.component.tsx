@@ -1,7 +1,7 @@
 ﻿
 import * as React from "react";
 
-import { IConvertImageProps, IConvertImageState } from '../../../model/convertimage/iconvertimage';
+import { IConvertImageProps, IConvertImageState } from '../../../model/client/convertimage/iconvertimage';
 
 import { BaseSixtyFourImage } from '../global-components/base-sixty-four-image/base-sixty-four-image.component';
 

@@ -2,7 +2,7 @@
 import * as React from "react";
 import Button from '@material-ui/core/Button';
 
-import { ISaveImageProps, ISaveImageState } from './../../../../model/saveimage/isaveimage';
+import { ISaveImageProps, ISaveImageState } from './../../../../model/client/saveimage/isaveimage';
 
 import './save-image.component.scss';
 

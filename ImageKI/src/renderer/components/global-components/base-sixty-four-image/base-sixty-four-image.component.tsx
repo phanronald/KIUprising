@@ -4,7 +4,7 @@
 
 import * as React from "react";
 
-import { IBaseSixtyFourImageProps, IBaseSixtyFourImageState } from './../../../../model/basesixtyfourimage/ibasesixtyfourimage';
+import { IBaseSixtyFourImageProps, IBaseSixtyFourImageState } from './../../../../model/client/basesixtyfourimage/ibasesixtyfourimage';
 
 import { SaveImage } from './../save-image-prompt/save-image.component';
 

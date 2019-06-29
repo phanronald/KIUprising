@@ -11,7 +11,7 @@ import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 
-import { IHeaderProps, IHeaderState } from './../../../model/header/iheader';
+import { IHeaderProps, IHeaderState } from './../../../model/client/header/iheader';
 
 import { CompressPngComponent } from './../compresspng/compresspng.component';
 import { CompressJpgComponent } from './../compressjpg/compressjpg.component';

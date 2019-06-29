@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 
-import { ICompressPngProps, ICompressPngState } from './../../../model/compresspng/icompresspng';
+import { ICompressPngProps, ICompressPngState } from './../../../model/client/compresspng/icompresspng';
 
 import { BaseSixtyFourImage } from './../global-components/base-sixty-four-image/base-sixty-four-image.component';
 
