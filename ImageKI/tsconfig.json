@@ -10,7 +10,10 @@
         "skipDefaultLibCheck": true,
         "strict": false,
         "noImplicitAny": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
     },
     "exclude": [
         "bin",
