@@ -10,7 +10,7 @@ export class ShredderService {
 	constructor(options?: IShredder) {
 
         this.settings = {
-            fileShredPath: DirectoryService.GetCurrentDirectory() + '\\shredtemp',
+            fileShredPath: DirectoryService.GetCurrentDirectory() + '\\process\\shred\\shred.exe',
             forceShred: true,
             iterations: 3,
             shredToByte: null,
