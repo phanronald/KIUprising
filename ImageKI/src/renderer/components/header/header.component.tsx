@@ -17,6 +17,7 @@ import { CompressPngComponent } from './../compresspng/compresspng.component';
 import { CompressJpgComponent } from './../compressjpg/compressjpg.component';
 import { UnarchiveComponent } from './../unarchive/unarchive.component';
 import { ConvertImageComponent } from './../convertimage/convertimage.component';
+import { ShredderComponent } from './../shredder/shredder.component';
 
 import './header.component.scss';
 
@@ -62,7 +63,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 							<Tab label="Compress JPG" icon={<FavoriteIcon />} />
 							<Tab label="Convert JPG to PNG" icon={<PersonPinIcon />} />
 							<Tab label="UnArchive" icon={<HelpIcon />} />
-							<Tab label="Item Five" icon={<ShoppingBasket />} />
+							<Tab label="Shred Files" icon={<ShoppingBasket />} />
 							<Tab label="Item Six" icon={<ThumbDown />} />
 							<Tab label="Item Seven" icon={<ThumbUp />} />
 						</Tabs>
@@ -85,7 +86,7 @@ export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState>
 					}
 					{
 						tabIndex === 4 &&
-						<div>Item Five</div>
+						<ShredderComponent />
 					}
 					{
 						tabIndex === 5 &&

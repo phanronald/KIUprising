@@ -6,14 +6,13 @@ export class ShredderService {
 
     private settings: IShredder;
     private shredFlags: string[] = [];
+    private fileShredPath = DirectoryService.GetCurrentDirectory() + '\\process\\shred\\shred.exe';
 
 	constructor(options?: IShredder) {
 
         this.settings = {
-            fileShredPath: DirectoryService.GetCurrentDirectory() + '\\process\\shred\\shred.exe',
             forceShred: true,
             iterations: 3,
-            shredToByte: null,
             deleteShred: true,
             hideShred: true,
             debugMode: true
@@ -43,9 +42,9 @@ export class ShredderService {
         let file = DirectoryService.GetBaseName(files[0]);
         let activeFilePath = DirectoryService.GetDirectoryName(files[0]);
         const options = Array.from(new Set(this.shredFlags.concat(files)));
-        const shred = DirectoryService.GetChildWithoutStream(this.settings.fileShredPath, options);
+        const shred = DirectoryService.GetChildWithoutStream(this.fileShredPath, options);
         if(this.settings.debugMode) {
-            console.log('shredfile: Configured shred command: ' + this.settings.fileShredPath + 
+            console.log('shredfile: Configured shred command: ' + this.fileShredPath + 
                 ' ' + options.join(' '));
         }
 
@@ -73,7 +72,7 @@ export class ShredderService {
             let rename = '';
 
             data = data.toString().replace(/(\r\n|\n|\r)/gm,"");
-            const validInfo = new RegExp("^" + this.settings.fileShredPath);
+            const validInfo = new RegExp("^" + this.fileShredPath);
             if(data.match(validInfo)) {
 
                 if(matches = data.match(/(\/[^:]+)\: pass (\d+)\/(\d+)/)) {
@@ -120,10 +119,6 @@ export class ShredderService {
 
         flagsArray.push('--iterations=' + this.settings.iterations);
         
-        if(this.settings.shredToByte && this.settings.shredToByte.match(/^\d+[KMG]?$/)) {
-            flagsArray.push('--size=' + this.settings.shredToByte);
-        }
-
         if(this.settings.deleteShred) {
             flagsArray.push('-u');
         }
