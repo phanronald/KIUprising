@@ -14,7 +14,7 @@ export class ShredderComponent extends React.Component<any, any> {
 		this.shredderService = new ShredderService();
 		//DirectoryService.IsFileExist('C:\\Users\\Ronald\\Documents\\visualstudiogithub\\test.txt');
 		//DirectoryService.IsFileExist('./shredtemp/shredthis.txt');
-		DirectoryService.IsFileExist(DirectoryService.GetCurrentDirectory() + '\\shredtemp');
+		DirectoryService.GetDirectoryFileContents(DirectoryService.GetCurrentDirectory());
 	}
 
 	public componentDidMount() {
