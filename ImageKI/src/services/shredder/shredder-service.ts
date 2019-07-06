@@ -1,5 +1,5 @@
 import { DirectoryService } from './../../server/directory-service';
-
+import { ProcessService } from './../../server/process-service';
 import { IShredder } from './../../model/server/shredder/ishredder';
 
 export class ShredderService {
@@ -42,7 +42,7 @@ export class ShredderService {
         let file = DirectoryService.GetBaseName(files[0]);
         let activeFilePath = DirectoryService.GetDirectoryName(files[0]);
         const options = Array.from(new Set(this.shredFlags.concat(files)));
-        const shred = DirectoryService.GetChildWithoutStream(this.fileShredPath, options);
+        const shred = ProcessService.GetChildWithoutStream(this.fileShredPath, options);
         if(this.settings.debugMode) {
             console.log('shredfile: Configured shred command: ' + this.fileShredPath + 
                 ' ' + options.join(' '));

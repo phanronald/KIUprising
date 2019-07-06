@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as process from 'process';
-import * as child from 'child_process';
 
 export class DirectoryService {
 
@@ -15,11 +14,6 @@ export class DirectoryService {
 
     public static GetDirectoryName = (filePath: string):string => {
         return path.dirname(filePath); 
-    }
-
-    public static GetChildWithoutStream = (exePath:string, options: string[]): child.ChildProcessWithoutNullStreams => {
-
-        return child.spawn(exePath, options);
     }
 
     public static GetDirectoryFileContents = (directoryPath: string): void => {
