@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { HeaderComponent } from './../header/header.component';
 
-import './layout.scss';
+import './layout.css';
 
 export interface LayoutProps {
 	children?: React.ReactNode;

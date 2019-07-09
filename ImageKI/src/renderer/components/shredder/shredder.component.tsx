@@ -3,7 +3,7 @@
 import { DirectoryService } from './../../../server/directory-service';
 import { ShredderService } from './../../../services/shredder/shredder-service';
 
-import './shredder.component.scss';
+import './shredder.component.css';
 
 export class ShredderComponent extends React.Component<any, any> {
 

@@ -4,7 +4,7 @@ import { ICompressPngProps, ICompressPngState } from './../../../model/client/co
 
 import { BaseSixtyFourImage } from './../global-components/base-sixty-four-image/base-sixty-four-image.component';
 
-import './compresspng.component.scss';
+import './compresspng.component.css';
 
 export class CompressPngComponent extends React.Component<ICompressPngProps, ICompressPngState> {
 	constructor(props: ICompressPngProps) {

@@ -19,7 +19,7 @@ import { UnarchiveComponent } from './../unarchive/unarchive.component';
 import { ConvertImageComponent } from './../convertimage/convertimage.component';
 import { ShredderComponent } from './../shredder/shredder.component';
 
-import './header.component.scss';
+import './header.component.css';
 
 export class HeaderComponent extends React.Component<IHeaderProps, IHeaderState> {
 

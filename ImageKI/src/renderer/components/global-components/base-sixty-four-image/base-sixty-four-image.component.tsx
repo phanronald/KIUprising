@@ -8,7 +8,7 @@ import { IBaseSixtyFourImageProps, IBaseSixtyFourImageState } from './../../../.
 
 import { SaveImage } from './../save-image-prompt/save-image.component';
 
-import './base-sixty-four-image.component.scss';
+import './base-sixty-four-image.component.css';
 
 export class BaseSixtyFourImage extends React.Component<IBaseSixtyFourImageProps, IBaseSixtyFourImageState> {
 

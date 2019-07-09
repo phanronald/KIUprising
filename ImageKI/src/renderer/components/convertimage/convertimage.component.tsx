@@ -5,7 +5,7 @@ import { IConvertImageProps, IConvertImageState } from '../../../model/client/co
 
 import { BaseSixtyFourImage } from '../global-components/base-sixty-four-image/base-sixty-four-image.component';
 
-import './convertimage.component.scss';
+import './convertimage.component.css';
 
 export class ConvertImageComponent extends React.Component<IConvertImageProps, IConvertImageState> {
 	constructor(props: IConvertImageProps) {

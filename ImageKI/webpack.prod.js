@@ -70,11 +70,10 @@ let rendererConfig = {
                 },
             },
             {
-                test: /\.(scss|css)$/,
+                test: /\.css/,
                 use: [
                     'style-loader',
-                    'css-loader?sourceMap',
-                    'sass-loader?sourceMap',
+                    'css-loader?sourceMap'
                 ],
             },
             {

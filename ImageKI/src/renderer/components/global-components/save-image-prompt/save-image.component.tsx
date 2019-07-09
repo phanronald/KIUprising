@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import { ISaveImageProps, ISaveImageState } from './../../../../model/client/saveimage/isaveimage';
 
-import './save-image.component.scss';
+import './save-image.component.css';
 
 export class SaveImage extends React.Component<ISaveImageProps, ISaveImageState> {
 

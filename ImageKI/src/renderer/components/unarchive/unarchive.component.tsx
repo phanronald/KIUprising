@@ -2,7 +2,7 @@
 
 import { IUnarchiveProps, IUnarchiveState } from './../../../model/client/unarchive/iunarchive';
 
-import './unarchive.component.scss';
+import './unarchive.component.css';
 
 export class UnarchiveComponent extends React.Component<IUnarchiveProps, IUnarchiveState> {
 	constructor(props: IUnarchiveProps) {
