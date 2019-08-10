@@ -1,4 +1,4 @@
-﻿namespace ImageAbridged.Models.Residence.Search
+﻿namespace ImageAbridged.Models.Residence.Search.Region
 {
 	public class Address
 	{
