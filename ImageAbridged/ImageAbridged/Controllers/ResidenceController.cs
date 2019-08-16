@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -10,8 +9,9 @@ using ImageAbridged.Models.Residence.Search.Region;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using OpenScraping;
-using OpenScraping.Config;
+using HtmlAgilityPack;
+using ScrapySharp.Extensions;
+using System.Text.RegularExpressions;
 
 namespace ImageAbridged.Controllers
 {
@@ -91,15 +91,9 @@ namespace ImageAbridged.Controllers
 				}
 			}
 
-			var aptSearchConfigJson = _hostingEnvironment.ContentRootPath + "\\Configs\\Residence\\searchapartmentconfig.json";
-			using (var sr = new StreamReader(aptSearchConfigJson))
-			{
-				var configJson = sr.ReadToEnd();
-				var config = StructuredDataConfig.ParseJsonString(configJson);
-				var openScraping = new StructuredDataExtractor(config);
-				var scrapingResults = openScraping.Extract(htmlResult);
-				var a = scrapingResults["apartments"];
-			}
+			var htmlDocument = new HtmlDocument();
+			htmlDocument.LoadHtml(htmlResult);
+			GetHtmlExtracted(htmlDocument.DocumentNode);
 
 			return Ok(searchAptOutput);
 		}
@@ -156,6 +150,51 @@ namespace ImageAbridged.Controllers
 			}
 
 			return searchAptOutput;
+		}
+
+		private void GetHtmlExtracted(HtmlNode htmlDocumentNode)
+		{
+			var allPlacards = new List<Placard>();
+
+			var allPlacardContentListing = htmlDocumentNode.CssSelect("div#placardContainer ul li");
+			foreach (var placardListing in allPlacardContentListing)
+			{
+				var placard = new Placard();
+				var sectionInContent = placardListing.CssSelect("article section.placardContent");
+				if(sectionInContent.Any())
+				{
+					var section = sectionInContent.First();
+
+					#region Media
+
+					var mediaInContent = section.CssSelect("div.imageContainer div.item.active ");
+					if (mediaInContent.Any())
+					{
+						var mediaImage = mediaInContent.First();
+						var url = Regex.Match(mediaImage.GetAttributeValue("style", ""), @"(?<=url\()(.*)(?=\))").Groups[1].Value.Trim('"');
+						placard.ImageUrl = url;
+					}
+
+					#endregion
+
+					#region Property Info
+					var titleInContent = section.CssSelect("a.placardTitle");
+					if(titleInContent.Any())
+					{
+						placard.Title = titleInContent.First().InnerText.Trim('\r', '\n');
+					}
+
+					var addressInContent = section.CssSelect("div.location");
+					if(addressInContent.Any())
+					{
+						placard.Location = addressInContent.First().InnerText.Trim('\r', '\n');
+					}
+
+					#endregion
+				}
+
+				allPlacards.Add(placard);
+			}
 		}
 	}
 }

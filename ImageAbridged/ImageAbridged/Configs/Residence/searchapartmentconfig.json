@@ -1,6 +1,0 @@
-{
-	"apartments": {
-		"_xpath": "//div[@id='placardContainer']//ul//li",
-		"title": "//article//header[contains(@class, 'placardHeader')]//a/text()[1]"
-	}
-}

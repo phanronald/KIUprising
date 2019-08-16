@@ -1,0 +1,7 @@
+{
+	"apartments": {
+		"_xpath": "//div[@id='placardContainer']//ul//li",
+		"title": ".//article//section[contains(@class, 'placardContent')]//a[contains(@class, 'placardTitle')]/text()[1]",
+		"address": ".//article//section[contains(@class, 'placardContent')]//div[contains(@class, 'location')]/text()[1]"
+	}
+}
