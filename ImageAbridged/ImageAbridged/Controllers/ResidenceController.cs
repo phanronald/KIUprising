@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using HtmlAgilityPack;
 using ScrapySharp.Extensions;
 using System.Text.RegularExpressions;
+using ImageAbridged.Models.Residence.Search.Details;
 
 namespace ImageAbridged.Controllers
 {
@@ -98,6 +99,29 @@ namespace ImageAbridged.Controllers
 			return Ok(searchAptOutput);
 		}
 
+		[HttpPost]
+		[Route("SearchApartmentDetail")]
+		public async Task<IActionResult> SearchApartmentDetail(string apartmentUrl)
+		{
+			var htmlResult = string.Empty;
+			using (var client = new HttpClient())
+			{
+				using (var response = client.GetAsync(apartmentUrl).Result)
+				{
+					using (HttpContent content = response.Content)
+					{
+						htmlResult = content.ReadAsStringAsync().Result;
+					}
+				}
+			}
+
+			var htmlDocument = new HtmlDocument();
+			htmlDocument.LoadHtml(htmlResult);
+			GetDetailHtmlExtracted(htmlDocument.DocumentNode);
+
+			return Ok(string.Empty);
+		}
+
 		private async Task<List<GeoLocationSearch>> GetSearchLocation(string searchTerm, double latitude, double longitude)
 		{
 			var geoLocationSearch = new List<GeoLocationSearch>();
@@ -160,40 +184,118 @@ namespace ImageAbridged.Controllers
 			foreach (var placardListing in allPlacardContentListing)
 			{
 				var placard = new Placard();
-				var sectionInContent = placardListing.CssSelect("article section.placardContent");
-				if(sectionInContent.Any())
+				var contentContainerArticle = placardListing.CssSelect("article");
+				if (contentContainerArticle.Any())
 				{
-					var section = sectionInContent.First();
+					var section = contentContainerArticle.First();
 
 					#region Media
 
-					var mediaInContent = section.CssSelect("div.imageContainer div.item.active ");
+					var mediaInContent = section.CssSelect("div.imageContainer div.carouselInner div.item ");
 					if (mediaInContent.Any())
 					{
-						var mediaImage = mediaInContent.First();
-						var url = Regex.Match(mediaImage.GetAttributeValue("style", ""), @"(?<=url\()(.*)(?=\))").Groups[1].Value.Trim('"');
-						placard.ImageUrl = url;
+						var allImageUrls = new List<string>();
+						foreach (var mediaImage in mediaInContent)
+						{
+							var url = Regex.Match(mediaImage.GetAttributeValue("style", ""), @"(?<=url\()(.*)(?=\))").Groups[1].Value.Trim('"');
+							allImageUrls.Add(url);
+						}
+
+						placard.ImageUrls = allImageUrls;
 					}
 
 					#endregion
 
 					#region Property Info
 					var titleInContent = section.CssSelect("a.placardTitle");
-					if(titleInContent.Any())
+					if (titleInContent.Any())
 					{
-						placard.Title = titleInContent.First().InnerText.Trim('\r', '\n');
+						var titleContainer = titleInContent.First();
+						placard.Title = titleContainer.InnerText.Trim('\r', '\n');
+						placard.DetailPageUrl = titleContainer.GetAttributeValue("href", "").Trim('"');
 					}
 
 					var addressInContent = section.CssSelect("div.location");
-					if(addressInContent.Any())
+					if (addressInContent.Any())
 					{
 						placard.Location = addressInContent.First().InnerText.Trim('\r', '\n');
+					}
+
+					var rentPriceInContent = section.CssSelect("span.altRentDisplay");
+					if (rentPriceInContent.Any())
+					{
+						placard.RentRange = rentPriceInContent.First().InnerText;
+					}
+
+					var unitInContent = section.CssSelect("span.unitLabel ");
+					if (unitInContent.Any())
+					{
+						placard.ResidentUnit = unitInContent.First().InnerText;
+					}
+
+					var availabilityInContent = section.CssSelect("span.availabilityDisplay");
+					if (availabilityInContent.Any())
+					{
+						placard.Availability = availabilityInContent.First().InnerText;
 					}
 
 					#endregion
 				}
 
 				allPlacards.Add(placard);
+			}
+		}
+
+		private void GetDetailHtmlExtracted(HtmlNode htmlDocumentNode)
+		{
+			var residenceDetail = new Residence();
+			var headerInfoSectionContent = htmlDocumentNode.CssSelect("header.propertyHeader.screen");
+			if (headerInfoSectionContent.Any())
+			{
+				var headerInfoSection = headerInfoSectionContent.First();
+				var residenceNameContainer = headerInfoSection.CssSelect(".propertyName");
+				if (residenceNameContainer.Any())
+				{
+					residenceDetail.Name = residenceNameContainer.First().InnerText.Trim('\r', '\n');
+				}
+
+				var residenceAddressContainer = headerInfoSection.CssSelect(".propertyAddress");
+				if (residenceAddressContainer.Any())
+				{
+					var residenceAddressNameContainer = residenceAddressContainer.CssSelect("h2");
+					if (residenceAddressNameContainer.Any())
+					{
+						var sb = new StringBuilder();
+						var location = residenceAddressNameContainer.First().InnerText.Trim('\r', '\n').Trim();
+						var locationsPure = location.Split(",", System.StringSplitOptions.RemoveEmptyEntries);
+
+						var index = 0;
+						foreach (var locationPure in locationsPure)
+						{
+							if (index != 0)
+							{
+								sb.Append(", ");
+							}
+
+							sb.Append(Regex.Replace(locationPure, "\r\n\\s+", " "));
+							index++;
+						}
+
+						residenceDetail.Location = sb.ToString();
+					}
+				}
+			}
+
+			var rentRollupSectionContainer = htmlDocumentNode.CssSelect("div.rentRollupContainer");
+			if (rentRollupSectionContainer.Any())
+			{
+				var rentListinInfo = new List<string>();
+				var rentDetailInfoContainer = rentRollupSectionContainer.First();
+				var allRentInfo = rentDetailInfoContainer.CssSelect("span.rentRollup");
+				foreach(var rentInfo in allRentInfo)
+				{
+					rentListinInfo.Add(Regex.Replace(rentInfo.InnerHtml, @"<[^>]*>", string.Empty));
+				}
 			}
 		}
 	}

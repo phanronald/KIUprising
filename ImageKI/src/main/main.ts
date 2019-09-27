@@ -15,7 +15,7 @@ const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         submenu: [
             { 
                 label: 'Refresh', 
-                role: 'forcereload' 
+                role: 'forceReload' 
             }
         ] 
     }

@@ -9,7 +9,7 @@ export class HomeComponent extends React.Component<any, any> {
 	}
 
 	public componentDidMount() {
-
+		
 	}
 
 	public componentWillUnmount() {
@@ -26,10 +26,10 @@ export class HomeComponent extends React.Component<any, any> {
 				<div>
 					<h4>Welcome to React, Electron and Typescript with Router Upgraded v2</h4>
 					<h3>{this.displayChromeVersion()}</h3>
-					<div className="gif-container">
+					{/* <div className="gif-container">
 						<img className="freezeframe" alt="Azur Lane Gif" 
 							src="./../images/gifs/azur-lane.gif"></img>
-					</div>
+					</div> */}
 				</div>
 			</>
 		);
