@@ -300,3 +300,4 @@ namespace ImageAbridged.Controllers
 		}
 	}
 }
+//https://stackoverflow.com/questions/43933783/angular-pass-component-to-a-component
